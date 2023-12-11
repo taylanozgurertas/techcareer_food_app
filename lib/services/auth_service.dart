@@ -7,6 +7,7 @@ import 'package:yemekler_uygulamasi/ui/views/tab_sayfa.dart';
 class AuthService {
   final userCollection = FirebaseFirestore.instance.collection("users");
   final firebaseAuth = FirebaseAuth.instance;
+  
 
   static String? _savedEmail;
 
@@ -44,6 +45,10 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(msg: e.message!, toastLength: Toast.LENGTH_LONG);
     }
+  }
+
+   Future<void> signOut() async {
+    await firebaseAuth.signOut();
   }
 
   Future<void> signIn(BuildContext context,

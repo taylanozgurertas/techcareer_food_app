@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:yemekler_uygulamasi/constants/sayilar.dart';
 import 'package:yemekler_uygulamasi/ui/views/anasayfa.dart';
+import 'package:yemekler_uygulamasi/ui/views/favsayfa.dart';
 import 'package:yemekler_uygulamasi/ui/views/sepet_sayfa.dart';
 
 class TabSayfa extends StatefulWidget {
@@ -13,7 +16,6 @@ class TabSayfa extends StatefulWidget {
 }
 
 class _TabSayfaState extends State<TabSayfa> {
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -21,7 +23,7 @@ class _TabSayfaState extends State<TabSayfa> {
         child: Scaffold(
             body: TabBarView(children: [
               const Anasayfa(),
-              SepetSayfa(),
+              FavSayfa(),
             ]),
             extendBody: true,
             floatingActionButtonLocation:
@@ -38,7 +40,8 @@ class _TabSayfaState extends State<TabSayfa> {
       child: TabBar(
         tabs: [
           Tab(child: Icon(Icons.home)),
-          Tab(child: Icon(Icons.manage_accounts))
+          Tab(
+              child: Icon(Icons.favorite_rounded))
         ],
         //labelColor: Renkler.beyazRenk,
         //unselectedLabelColor: Renkler.beyazRenk,
