@@ -4,6 +4,7 @@ import 'package:kartal/kartal.dart';
 import 'package:yemekler_uygulamasi/constants/metinler.dart';
 import 'package:yemekler_uygulamasi/constants/sayilar.dart';
 import 'package:yemekler_uygulamasi/data/entity/yemekler.dart';
+import 'package:yemekler_uygulamasi/services/auth_service.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/anasayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/detay_sayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/sepet_sayfa_cubit.dart';
@@ -181,6 +182,9 @@ class _DetaySayfaState extends State<DetaySayfa>
     } else {
       await context.read<DetaySayfaCubit>().sepeteEkle(widget.yemek);
       // ignore: use_build_context_synchronously
+      var email = AuthService.getSavedEmail();
+
+      print("email: $email");
       Navigator.push(
               context,
               MaterialPageRoute(
@@ -189,7 +193,7 @@ class _DetaySayfaState extends State<DetaySayfa>
               ))
           .then((value) => context
               .read<SepetSayfaCubit>()
-              .sepettekiUrunleriCek("taylan_deneme"));
+              .sepettekiUrunleriCek(email ?? "taylan"));
     }
   }
 

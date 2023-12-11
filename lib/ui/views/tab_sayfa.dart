@@ -4,13 +4,16 @@ import 'package:yemekler_uygulamasi/ui/views/anasayfa.dart';
 import 'package:yemekler_uygulamasi/ui/views/sepet_sayfa.dart';
 
 class TabSayfa extends StatefulWidget {
-  const TabSayfa({super.key});
+  const TabSayfa({
+    super.key,
+  });
 
   @override
   State<TabSayfa> createState() => _TabSayfaState();
 }
 
 class _TabSayfaState extends State<TabSayfa> {
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

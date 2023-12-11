@@ -1,15 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:yemekler_uygulamasi/constants/metinler.dart';
+import 'package:yemekler_uygulamasi/locator.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/anasayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/detay_sayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/favsayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/sepet_sayfa_cubit.dart';
-import 'package:yemekler_uygulamasi/ui/views/tab_sayfa.dart';
+import 'package:yemekler_uygulamasi/ui/views/login_screen/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  setupLocator();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(), //tema degisimi
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
         title: Metinler.uygBaslik,
         debugShowCheckedModeBanner: false,
         theme: _getTheme(context),
-        home: const TabSayfa(),
+        home: LoginScreen(),
       ),
     );
   }

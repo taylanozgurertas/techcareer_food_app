@@ -4,6 +4,7 @@ import 'package:kartal/kartal.dart';
 import 'package:yemekler_uygulamasi/constants/metinler.dart';
 import 'package:yemekler_uygulamasi/constants/sayilar.dart';
 import 'package:yemekler_uygulamasi/data/entity/sepet.dart';
+import 'package:yemekler_uygulamasi/services/auth_service.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/sepet_sayfa_cubit.dart';
 
 // ignore: must_be_immutable
@@ -61,7 +62,9 @@ class _SepetSayfaState extends State<SepetSayfa> {
   @override
   void initState() {
     super.initState();
-    context.read<SepetSayfaCubit>().sepettekiUrunleriCek("taylan_deneme");
+    var email = AuthService.getSavedEmail();
+    
+    context.read<SepetSayfaCubit>().sepettekiUrunleriCek(email ?? "taylan");
   }
 
   List<GruplanmisUrun> groupedSepet = [];
@@ -167,17 +170,17 @@ class _SepetSayfaState extends State<SepetSayfa> {
                               ),
                               InkWell(
                                 onTap: () {
+                                  var email = AuthService.getSavedEmail();
                                   context
                                       .read<SepetSayfaCubit>()
-                                      .sepetUrunSil(gruplanmisUrun.sepetYemekId,
-                                          "taylan_deneme")
+                                      .sepetUrunSil(
+                                          gruplanmisUrun.sepetYemekId, "$email")
                                       .then((silindi) {
                                     if (silindi) {
                                       //! Ürün başarıyla silindi, sepeti güncelle
                                       context
                                           .read<SepetSayfaCubit>()
-                                          .sepettekiUrunleriCek(
-                                              "taylan_deneme");
+                                          .sepettekiUrunleriCek("$email");
                                       setState(() {
                                         groupedSepet.removeAt(indeks);
                                         if (groupedSepet.isEmpty) {

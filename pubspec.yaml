@@ -37,6 +37,11 @@ dependencies:
   sqflite:
   path:
   provider:
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.2
+  cloud_firestore: ^4.13.5
+  get_it:
+  fluttertoast: ^8.0.8
 
 
 
@@ -64,6 +69,15 @@ flutter:
     - family: WorkSans 
       fonts: 
         - asset: fonts/WorkSans-Bold.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Montserrat-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Montserrat-Bold.otf
+          weight: 700
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

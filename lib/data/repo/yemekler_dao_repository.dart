@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:yemekler_uygulamasi/data/entity/favlanan_urun.dart';
 import 'package:yemekler_uygulamasi/data/entity/sepet.dart';
@@ -8,39 +9,46 @@ import 'package:yemekler_uygulamasi/data/entity/yemekler_cevap.dart';
 import 'package:yemekler_uygulamasi/data/veritabani_yardimcisi/yardimci.dart';
 
 class YemeklerDaoRepository {
-  Future<void> sqliteKaydet(int urun_id, String urun_adi, String urun_resim_adi, String urun_fiyati) async {
-    var db = await VeritabaniYardimcisi.veritabaniErisim(); //veritabanı erişim ve kaydetme islemi burada
-    var yeniUrun = Map<String, dynamic>();
-    yeniUrun["urun_id"] = urun_id;
-    yeniUrun["urun_adi"] = urun_adi;
-    yeniUrun["urun_resim_adi"] = urun_resim_adi;
-    yeniUrun["urun_fiyati"] = urun_fiyati;
+
+  Future<void> sqliteKaydet(int urunId, String urunAdi, String urunResimAdi,
+      String urunFiyati) async {
+    var db = await VeritabaniYardimcisi
+        .veritabaniErisim(); //veritabanı erişim ve kaydetme islemi burada
+    var yeniUrun = <String, dynamic>{};
+    yeniUrun["urun_id"] = urunId;
+    yeniUrun["urun_adi"] = urunAdi;
+    yeniUrun["urun_resim_adi"] = urunResimAdi;
+    yeniUrun["urun_fiyati"] = urunFiyati;
 
     await db.insert("favlananUrun", yeniUrun);
   }
 
+
   Future<List<FavlananUrun>> favlananUrunleriYukle() async {
     var db = await VeritabaniYardimcisi.veritabaniErisim(); //veritabanı erisim
-    List<Map<String, dynamic>> satirlar = await db.rawQuery("SELECT * FROM favlananUrun"); //sorguyu calistirabiliyoruz
+    List<Map<String, dynamic>> satirlar = await db
+        .rawQuery("SELECT * FROM favlananUrun"); //sorguyu calistirabiliyoruz
     //her bir satırı bir map olarak bir listeye atıyoruz
     return List.generate(satirlar.length, (index) {
       //tek tek bu listenin tum elemanlari icin Kisiler sınıfından nesne üretiyoruz
       var satir = satirlar[index];
-      var urun_id = satir["urun_id"];
-      var urun_adi = satir["urun_adi"];
-      var urun_resim_adi = satir["urun_resim_adi"];
-      var urun_fiyati = satir["urun_fiyati"];
+      var urunId = satir["urun_id"];
+      var urunAdi = satir["urun_adi"];
+      var urunResimAdi = satir["urun_resim_adi"];
+      var urunFiyati = satir["urun_fiyati"];
       return FavlananUrun(
-          urun_id: urun_id,
-          urun_adi: urun_adi,
-          urun_resim_adi: urun_resim_adi,
-          urun_fiyati: urun_fiyati); //uretilen nesnelerin verileri veritabanından almis oluyoruz yani
+          urun_id: urunId,
+          urun_adi: urunAdi,
+          urun_resim_adi: urunResimAdi,
+          urun_fiyati:
+              urunFiyati); //uretilen nesnelerin verileri veritabanından almis oluyoruz yani
     });
   }
 
-  Future<void> sqliteSil(int urun_id) async {
-    var db = await VeritabaniYardimcisi.veritabaniErisim(); //veritabanı erişim ve silme islemi
-    await db.delete("favlananUrun", where: 'urun_id = ?', whereArgs: [urun_id]);
+  Future<void> sqliteSil(int urunId) async {
+    var db = await VeritabaniYardimcisi
+        .veritabaniErisim(); //veritabanı erişim ve silme islemi
+    await db.delete("favlananUrun", where: 'urun_id = ?', whereArgs: [urunId]);
   }
 
   List<Yemekler> parseYemeklerCevap(String cevap) {
@@ -80,11 +88,11 @@ class YemeklerDaoRepository {
     return SepetCevap.fromJson(json.decode(cevap)).sepetListesi;
   }
 
-  Future<List<Sepet>> sepettekiUrunleriCek(String kullanici_adi) async {
+  Future<List<Sepet>> sepettekiUrunleriCek(String kullaniciAdi) async {
     var url = "http://kasimadalan.pe.hu/yemekler/sepettekiYemekleriGetir.php";
     List<Sepet> hataOlmasiDurumundaList = [];
     try {
-      var veri = {"kullanici_adi": kullanici_adi};
+      var veri = {"kullanici_adi": kullaniciAdi};
       var cevap = await Dio().post(url, data: FormData.fromMap(veri));
       print("sepetteki ürünler getirildi: ${cevap.data.toString()}");
       return parseSepetUrunleriCevap(cevap.data.toString());
@@ -94,9 +102,12 @@ class YemeklerDaoRepository {
     }
   }
 
-  Future<void> sepetUrunSil(int sepet_yemek_id, String kullanici_adi) async {
+  Future<void> sepetUrunSil(int sepetYemekId, String kullaniciAdi) async {
     var url = "http://kasimadalan.pe.hu/yemekler/sepettenYemekSil.php";
-    var veri = {"sepet_yemek_id": sepet_yemek_id.toString(), "kullanici_adi": kullanici_adi};
+    var veri = {
+      "sepet_yemek_id": sepetYemekId.toString(),
+      "kullanici_adi": kullaniciAdi
+    };
     var cevap = await Dio().post(url, data: FormData.fromMap(veri));
     print("yemek basarili bir sekilde silindi ${cevap.data.toString()}");
   }

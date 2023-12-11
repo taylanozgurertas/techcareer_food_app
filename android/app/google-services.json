@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350742620933",
+    "project_id": "yemekleruygulamasi",
+    "storage_bucket": "yemekleruygulamasi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350742620933:android:de3edffeef4252fc82a56c",
+        "android_client_info": {
+          "package_name": "com.example.yemekler_uygulamasi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsnNLzW6-GxZYYXC4_lhCwFoFIJ7t8AE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
