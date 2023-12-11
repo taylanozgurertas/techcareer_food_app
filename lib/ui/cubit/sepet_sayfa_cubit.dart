@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:yemekler_uygulamasi/data/entity/sepet.dart';
 import 'package:yemekler_uygulamasi/data/repo/yemekler_dao_repository.dart';
 
@@ -9,9 +8,9 @@ class SepetSayfaCubit extends Cubit<List<Sepet>> {
 
   var repo = YemeklerDaoRepository();
 
-  Future<void> sepettekiUrunleriCek(String kullanici_adi) async {
+  Future<void> sepettekiUrunleriCek(String kullaniciAdi) async {
     try {
-      var sepetListesi = await repo.sepettekiUrunleriCek(kullanici_adi);
+      var sepetListesi = await repo.sepettekiUrunleriCek(kullaniciAdi);
       if (sepetListesi.isNotEmpty) {
         emit(sepetListesi);
       } else {
@@ -25,10 +24,10 @@ class SepetSayfaCubit extends Cubit<List<Sepet>> {
     }
   }
 
-  Future<bool> sepetUrunSil(int sepet_yemek_id, String kullanici_adi) async {
+  Future<bool> sepetUrunSil(int sepetYemekId, String kullaniciAdi) async {
     try {
-      await repo.sepetUrunSil(sepet_yemek_id, kullanici_adi);
-      await sepettekiUrunleriCek(kullanici_adi);
+      await repo.sepetUrunSil(sepetYemekId, kullaniciAdi);
+      await sepettekiUrunleriCek(kullaniciAdi);
       return true;
     } catch (e) {
       print("Hata oluştu: $e");
@@ -36,36 +35,3 @@ class SepetSayfaCubit extends Cubit<List<Sepet>> {
     }
   }
 }
-
-
-/*
-sepet sayfa cubit yedegi
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:yemekler_uygulamasi/data/entity/sepet.dart';
-import 'package:yemekler_uygulamasi/data/repo/yemekler_dao_repository.dart';
-
-class SepetSayfaCubit extends Cubit<List<Sepet>> {
-  SepetSayfaCubit() : super(<Sepet>[]);
-
-  var repo = YemeklerDaoRepository();
-
-  Future<void> sepettekiUrunleriCek(String kullanici_adi) async {
-    try {
-      var sepetListesi = await repo.sepettekiUrunleriCek(kullanici_adi);
-      emit(sepetListesi);
-    } catch (e) {
-      print("sepet boş geldi");
-      emit([]);
-    }
-  }
-
-  Future<void> sepetUrunSil(int sepet_yemek_id, String kullanici_adi) async {
-    await repo.sepetUrunSil(sepet_yemek_id, kullanici_adi);
-    await sepettekiUrunleriCek(kullanici_adi);
-  }
-}
-
- */

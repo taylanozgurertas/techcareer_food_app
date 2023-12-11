@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 import 'package:yemekler_uygulamasi/constants/metinler.dart';
-import 'package:yemekler_uygulamasi/constants/renkler.dart';
 import 'package:yemekler_uygulamasi/constants/sayilar.dart';
 import 'package:yemekler_uygulamasi/data/entity/yemekler.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/anasayfa_cubit.dart';
@@ -25,7 +24,7 @@ class _DetaySayfaState extends State<DetaySayfa>
     with SingleTickerProviderStateMixin {
   var favlandi = false;
   var gizlebunu = true;
-  var tutucu = 1;
+  var tutucu = Sayilar.bir;
 
   @override
   void initState() {
@@ -49,7 +48,6 @@ class _DetaySayfaState extends State<DetaySayfa>
                 },
                 icon: const Icon(
                   Icons.home,
-                  color: Renkler.beyazRenk,
                 ))
           ],
           leading: IconButton(
@@ -58,7 +56,6 @@ class _DetaySayfaState extends State<DetaySayfa>
               },
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Renkler.beyazRenk,
               ))),
       body: BlocBuilder<DetaySayfaCubit, UrunBilgileri>(
           builder: (context, gelenUrunBilgisi) {
@@ -87,7 +84,7 @@ class _DetaySayfaState extends State<DetaySayfa>
                     builder: (context, liste) {
                   if (liste.isNotEmpty) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 15),
+                      padding: Sayilar.onbesLik,
                       child: ListView.builder(
                         itemCount: liste.length,
                         itemBuilder: (context, indeks) {
@@ -143,8 +140,8 @@ class _DetaySayfaState extends State<DetaySayfa>
   SizedBox detaySayfaOzelResim(
       BuildContext context, List<Yemekler> liste, int indeks) {
     return SizedBox(
-      height: context.general.mediaQuery.size.width / 4,
-      width: context.general.mediaQuery.size.height / 8,
+      height: context.general.mediaQuery.size.width / Sayilar.resimYukseklik,
+      width: context.general.mediaQuery.size.height / Sayilar.sekizim,
       child: ClipOval(
         child: Image.network(
           '${Metinler.temelResimUrl}${liste[indeks].yemek_resim_adi}',
@@ -166,7 +163,6 @@ class _DetaySayfaState extends State<DetaySayfa>
   ElevatedButton sepeteEkleButonu(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: Renkler.siyahDetay,
           shape: RoundedRectangleBorder(borderRadius: Sayilar.defaultCircular)),
       onPressed: () {
         sepeteEkleOnePressed(context);
@@ -178,9 +174,9 @@ class _DetaySayfaState extends State<DetaySayfa>
     );
   }
 
-  //! 
+  //!
   Future<void> sepeteEkleOnePressed(BuildContext context) async {
-    if (tutucu == 0) {
+    if (tutucu == Sayilar.kZeros) {
       print("0 adetle bir şey eklenmez");
     } else {
       await context.read<DetaySayfaCubit>().sepeteEkle(widget.yemek);
@@ -212,7 +208,6 @@ class _DetaySayfaState extends State<DetaySayfa>
 
   Card adetSecmeCard(BuildContext context, UrunBilgileri gelenUrunBilgisi) {
     return Card(
-      color: Renkler.siyahDetay,
       child: Padding(
         padding: Sayilar.detayCardPad,
         child: Row(
@@ -220,7 +215,6 @@ class _DetaySayfaState extends State<DetaySayfa>
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
-              backgroundColor: Renkler.detayaOzelRenk,
               child: IconButton(
                   onPressed: () {
                     context.read<DetaySayfaCubit>().urunFiyatiniYollaIslemSoyle(
@@ -238,7 +232,6 @@ class _DetaySayfaState extends State<DetaySayfa>
               ),
             ),
             CircleAvatar(
-              backgroundColor: Renkler.detayaOzelRenk,
               child: IconButton(
                   onPressed: () {
                     context.read<DetaySayfaCubit>().urunFiyatiniYollaIslemSoyle(

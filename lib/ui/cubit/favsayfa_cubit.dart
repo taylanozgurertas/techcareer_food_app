@@ -12,19 +12,13 @@ class FavSayfaCubit extends Cubit<List<FavlananUrun>> {
     emit(liste);
   }
 
-  Future<void> sqliteKaydet(int urun_id, String urun_adi, String urun_resim_adi, String urun_fiyati) async {
-    await krepo.sqliteKaydet(urun_id, urun_adi, urun_resim_adi, urun_fiyati);
+  Future<void> sqliteKaydet(int urunId, String urunAdi, String urunResimAdi,
+      String urunFiyati) async {
+    await krepo.sqliteKaydet(urunId, urunAdi, urunResimAdi, urunFiyati);
   }
 
-  /*
-  Future<void> ara(String aramaKelimesi) async{
-    var liste = await krepo.ara(aramaKelimesi);
-    emit(liste);
-  }
-   */
-
-  Future<void> sqliteSil(int urun_id) async {
-    await krepo.sqliteSil(urun_id);
+  Future<void> sqliteSil(int urunId) async {
+    await krepo.sqliteSil(urunId);
     urunleriYukle();
   }
 }

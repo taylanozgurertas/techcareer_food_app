@@ -10,4 +10,5 @@ class Renkler {
   static const Color gri = Colors.grey;
   static const Color siyahDetay = Colors.black87;
   static const Color detayaOzelRenk = Color.fromARGB(255, 34, 34, 34);
+  static const Color ciyan = Colors.cyan;
 }

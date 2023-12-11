@@ -1,6 +1,7 @@
 class Metinler {
   static const String yemeklerYazi = "Hoş geldiniz";
-  static const String temelResimUrl = "http://kasimadalan.pe.hu/yemekler/resimler/";
+  static const String temelResimUrl =
+      "http://kasimadalan.pe.hu/yemekler/resimler/";
   static const String temelAssetYolu = "assets/";
   static const String hop = "";
   static const String tarfoodResim = "k_logo.png";
@@ -9,6 +10,7 @@ class Metinler {
   static const String urunDetayi = "Ürün Detayı";
   static const String sepeteEkle = "Sepete Ekle";
   static const String sepetimYazi = "Sepetim";
+  static const String favorilerim = "Favorilerim";
   static const String uygBaslik = "Yemekler Sipariş Uygulamasi";
   static const String fontAdi = "WorkSans";
   static const String gonderimResimYazi = "k_teslimat.png";
@@ -19,7 +21,9 @@ class Metinler {
   static const String digerUrunler = "Diğer ürünlerimizi incele";
   static const String adet = "Adet: ";
   static const String toplamT = "Toplam: ₺";
+  static const String fiyatT = "Fiyat: ₺";
   static const String hataOlustu = "Hata oluştu: ";
   static const String defaultToplam = "Toplam: ₺0.0";
   static const String sepetteUrunYok = "Sepette ürün bulunmamaktadır";
+  static const String favoriUrunSecilmemis = "Favori ürün seçilmemiş";
 }

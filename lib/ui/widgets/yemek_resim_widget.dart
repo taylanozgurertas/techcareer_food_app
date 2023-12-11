@@ -20,7 +20,8 @@ class _YemekResimWidgetState extends State<YemekResimWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.yemek.yemek_adi == "Lazanya" || widget.yemek.yemek_adi == "Pizza") {
+    if (widget.yemek.yemek_adi == "Lazanya" ||
+        widget.yemek.yemek_adi == "Pizza") {
       setState(() {
         yemekBozuk = false;
       });
@@ -49,21 +50,20 @@ class _YemekResimWidgetState extends State<YemekResimWidget> {
               child: Image.network(
                 '${Metinler.temelResimUrl}${widget.yemek.yemek_resim_adi}',
                 fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    // Resim yüklendiğinde
+                    return child;
+                  } else {
+                    // Resim henüz yüklenmediğinde
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
               ),
             ),
           );
   }
 }
-
-
-/*
-Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                '${Metinler.temelResimUrl}${widget.yemek.yemek_resim_adi}',
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
- */

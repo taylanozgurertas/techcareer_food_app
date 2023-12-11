@@ -10,7 +10,8 @@ class UrunBilgileri {
 }
 
 class DetaySayfaCubit extends Cubit<UrunBilgileri> {
-  DetaySayfaCubit() : super(UrunBilgileri(secilenAdetSayisi: 0, toplamFiyat: 0));
+  DetaySayfaCubit()
+      : super(UrunBilgileri(secilenAdetSayisi: 0, toplamFiyat: 0));
 
   var repo = YemeklerDaoRepository();
 
@@ -21,13 +22,15 @@ class DetaySayfaCubit extends Cubit<UrunBilgileri> {
     if (state.secilenAdetSayisi == 0) {
       print("0 adet satin alinmamis demektir");
     } else {
-      await repo.sepeteYemekEkle(
-          yemek: yemek,
-          kullaniciAdi: kullaniciAdi,
-          adet: state.secilenAdetSayisi,
-          yemek_resim_adi: yemek.yemek_resim_adi,
-          yemek_adi: yemek.yemek_adi,
-          yemek_fiyat: int.parse(yemek.yemek_fiyat));
+      for (var i = 0; i < state.secilenAdetSayisi; i++) {
+        await repo.sepeteYemekEkle(
+            yemek: yemek,
+            kullaniciAdi: kullaniciAdi,
+            adet: 1,
+            yemek_resim_adi: yemek.yemek_resim_adi,
+            yemek_adi: yemek.yemek_adi,
+            yemek_fiyat: int.parse(yemek.yemek_fiyat));
+      }
     }
   }
 
@@ -53,7 +56,9 @@ class DetaySayfaCubit extends Cubit<UrunBilgileri> {
     state.secilenAdetSayisi += 1;
     state.toplamFiyat = state.secilenAdetSayisi * urunFiyat;
 
-    emit(UrunBilgileri(secilenAdetSayisi: state.secilenAdetSayisi, toplamFiyat: state.toplamFiyat));
+    emit(UrunBilgileri(
+        secilenAdetSayisi: state.secilenAdetSayisi,
+        toplamFiyat: state.toplamFiyat));
   }
 
   void azalt() {
@@ -62,7 +67,9 @@ class DetaySayfaCubit extends Cubit<UrunBilgileri> {
     } else {
       state.secilenAdetSayisi -= 1;
       state.toplamFiyat = state.secilenAdetSayisi * urunFiyat;
-      emit(UrunBilgileri(secilenAdetSayisi: state.secilenAdetSayisi, toplamFiyat: state.toplamFiyat));
+      emit(UrunBilgileri(
+          secilenAdetSayisi: state.secilenAdetSayisi,
+          toplamFiyat: state.toplamFiyat));
     }
   }
 }

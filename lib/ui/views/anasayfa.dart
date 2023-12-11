@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kartal/kartal.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:yemekler_uygulamasi/constants/metinler.dart';
 import 'package:yemekler_uygulamasi/constants/renkler.dart';
 import 'package:yemekler_uygulamasi/constants/sayilar.dart';
 import 'package:yemekler_uygulamasi/data/entity/yemekler.dart';
+import 'package:yemekler_uygulamasi/main.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/anasayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/cubit/favsayfa_cubit.dart';
 import 'package:yemekler_uygulamasi/ui/views/detay_sayfa.dart';
-import 'package:kartal/kartal.dart';
 import 'package:yemekler_uygulamasi/ui/views/favsayfa.dart';
-import 'package:yemekler_uygulamasi/ui/views/sepet_sayfa.dart';
 import 'package:yemekler_uygulamasi/ui/widgets/fiyat_text_widget.dart';
 import 'package:yemekler_uygulamasi/ui/widgets/ozel_appbar_icon_widget.dart';
 import 'package:yemekler_uygulamasi/ui/widgets/yemek_adi_widget.dart';
@@ -29,7 +30,8 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
   var scrollBilgim = false;
   var favlanmisMi = false;
   final Map<int, AnimationController> _animationControllers = {};
-  List<bool> favDurumListesi = List.generate(Sayilar.favlanilabilirUzunluk, (index) => false);
+  List<bool> favDurumListesi =
+      List.generate(Sayilar.favlanilabilirUzunluk, (index) => false);
 
   @override
   void initState() {
@@ -47,7 +49,8 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
 
 //!scrollKontrolLogic Icerigi
   void scrollLogicListenerIcerik() {
-    if (_scrollController.position.pixels == _scrollController.position.minScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.minScrollExtent) {
       setState(() {
         scrollBilgim = false;
       });
@@ -61,19 +64,12 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
   //!ozelappbar widgeti kullanimi
   List<Widget>? actionsAppBarList = [
     OzelAppBarIcon(
-      gidilecekSayfa: SepetSayfa(),
-      icon: const Icon(Icons.account_box),
-    ),
-    OzelAppBarIcon(
       gidilecekSayfa: FavSayfa(),
       icon: const Icon(
         Icons.favorite,
       ),
     ),
-    OzelAppBarIcon(
-      gidilecekSayfa: SepetSayfa(),
-      icon: const Icon(Icons.search),
-    ),
+    const ThemeToggleButton(),
   ];
 
 //!dispose islemleri
@@ -102,11 +98,13 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
                   return GridView.builder(
                     controller: _scrollController,
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: Sayilar.crossAxisAyari),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: Sayilar.crossAxisAyari),
                     itemCount: liste.length,
                     itemBuilder: (context, indeks) {
                       animasyonKontrolBasitLogic(indeks);
-                      var yemek = liste[indeks]; //! yemek listesinden indekse gore yemek cekildi
+                      var yemek = liste[
+                          indeks]; //! yemek listesinden indekse gore yemek cekildi
                       return GestureDetector(
                         onTap: () {
                           cardaTiklandiBasitLogic(context, yemek);
@@ -116,43 +114,55 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
                           children: [
                             YemekAdiWidget(
                               yemek: yemek,
-                              yaziBuyuklugu: 16,
+                              yaziBuyuklugu: Sayilar.onaltim,
                             ),
                             Padding(
                               padding: context.padding.low,
                               child: Column(
                                 children: [
-                                  Stack(alignment: Alignment.bottomRight, children: [
-                                    SizedBox(
-                                      height: context.general.mediaQuery.size.width / Sayilar.resimYukseklik,
-                                      width: context.general.mediaQuery.size.height / Sayilar.resimGenislik,
-                                      child: Card(
-                                        child: YemekResimWidget(yemek: yemek),
-                                      ),
-                                    ),
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                          color: Renkler.favDiger, borderRadius: BorderRadius.all(Radius.circular(10))),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            var inteCevrilenId = int.parse(yemek.yemek_id);
+                                  Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        SizedBox(
+                                          height: context.general.mediaQuery
+                                                  .size.width /
+                                              Sayilar.resimYukseklik,
+                                          width: context.general.mediaQuery.size
+                                                  .height /
+                                              Sayilar.resimGenislik,
+                                          child: Card(
+                                            child:
+                                                YemekResimWidget(yemek: yemek),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Renkler.favDiger,
+                                              borderRadius: Sayilar.favCont),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                var inteCevrilenId =
+                                                    int.parse(yemek.yemek_id);
 
-                                            favDurumKontrolcusu(indeks, inteCevrilenId, yemek);
-                                          });
-                                        },
-                                        child: lottieBegeni(context, indeks),
-                                      ),
-                                    ),
-                                  ]),
+                                                favDurumKontrolcusu(indeks,
+                                                    inteCevrilenId, yemek);
+                                              });
+                                            },
+                                            child:
+                                                lottieBegeni(context, indeks),
+                                          ),
+                                        ),
+                                      ]),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Padding(
                                         padding: context.padding.onlyTopLow,
                                         child: UrunFiyatWidgeti(
                                           yemek: yemek,
-                                          yaziBuyuklugu: 15,
+                                          yaziBuyuklugu: Sayilar.basBosluk,
                                         ),
                                       ),
                                     ],
@@ -180,18 +190,23 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
 //!anasayfaya ozel ufak appbar
   AppBar anaSayfaAppBar(BuildContext context) {
     return AppBar(
-      shadowColor: Renkler.siyahRenk,
+      //shadowColor: Renkler.siyahRenk,
       elevation: Sayilar.elevationGenel,
       centerTitle: false,
-      title: SizedBox(width: context.general.mediaQuery.size.height / Sayilar.on, child: ustUfakLogo()),
+      title: SizedBox(
+          width: context.general.mediaQuery.size.height / Sayilar.on,
+          child: ustUfakLogo()),
       actions: actionsAppBarList,
     );
   }
 
 //!anasayfaya ozel ufak logo
   Image ustUfakLogo() {
-    return Image.asset("${Metinler.temelAssetYolu}${Metinler.tarfoodResim}",
-        fit: BoxFit.contain, color: Renkler.beyazRenk);
+    return Image.asset(
+      "${Metinler.temelAssetYolu}${Metinler.tarfoodResim}",
+      fit: BoxFit.contain,
+      color: Renkler.ciyan,
+    );
   }
 
 //!ust gorunmez ana sayfaya ozel bosluk
@@ -208,7 +223,9 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
     return AnimatedContainer(
       curve: Curves.fastOutSlowIn,
       duration: context.duration.durationLow,
-      height: scrollBilgim ? Sayilar.kZero : context.general.mediaQuery.size.width / Sayilar.anaSayfaHesabi,
+      height: scrollBilgim
+          ? Sayilar.kZero
+          : context.general.mediaQuery.size.width / Sayilar.anaSayfaHesabi,
       child: Align(
         alignment: Alignment.centerRight,
         child: SizedBox(
@@ -262,7 +279,8 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
 
     if (favDurumListesi[indeks]) {
       _animationControllers[indeks]!.forward();
-      context.read<FavSayfaCubit>().sqliteKaydet(cevrilenId, yemek.yemek_adi, yemek.yemek_resim_adi, yemek.yemek_fiyat);
+      context.read<FavSayfaCubit>().sqliteKaydet(cevrilenId, yemek.yemek_adi,
+          yemek.yemek_resim_adi, yemek.yemek_fiyat);
     } else {
       _animationControllers[indeks]!.reverse().whenComplete(() {
         context.read<FavSayfaCubit>().sqliteSil(int.parse(yemek.yemek_id));
@@ -274,7 +292,20 @@ class _AnasayfaState extends State<Anasayfa> with TickerProviderStateMixin {
   Divider divider() {
     return const Divider(
       thickness: Sayilar.dividerKalinligi,
-      color: Renkler.gri,
+    );
+  }
+}
+
+class ThemeToggleButton extends StatelessWidget {
+  const ThemeToggleButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.lightbulb),
+      onPressed: () {
+        Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+      },
     );
   }
 }
