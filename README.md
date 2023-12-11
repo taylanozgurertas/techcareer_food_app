@@ -38,3 +38,6 @@ not: ekran goruntuleri alindiktan sonra sag alt ikonda ufak guncelleme yapildi.
 ![2](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/cfd5f677-0f2c-4e48-bb6a-e1ac40804982)
 ![1](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/304e559e-f3d4-4b69-8043-c581f8bd0267)
 ![6](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/964f81a6-416a-44b4-807d-a3f0f5541259)
+![8](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/4dca6c69-987d-455a-9f25-13fdf71ed4b2)
+![7](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/78176bdf-7102-49c8-badb-c05367a70d08)
+![9](https://github.com/taylanozgurertas/techcareer_food_app/assets/92798120/3e30b8b8-9779-4a17-a7de-216a5c3ed635)
