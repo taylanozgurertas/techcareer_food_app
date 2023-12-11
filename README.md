@@ -5,20 +5,27 @@ TechCareer.net Yemekler uygulaması bitirme projem.
 ## kullanılan teknolojiler:
 
   flutter_bloc: 
-
   
   dio: 
-
   
   kartal: ^3.5.0
+  
   lottie: ^2.7.0
+
   sqflite:
+  
   path:
+  
   provider:
+  
   firebase_core: ^2.24.2
+  
   firebase_auth: ^4.15.2
+  
   cloud_firestore: ^4.13.5
+  
   get_it:
+  
   fluttertoast: ^8.0.8
 
 ### uygulama ekran görüntüleri:
