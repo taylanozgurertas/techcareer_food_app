@@ -5,7 +5,11 @@ TechCareer.net Yemekler uygulaması bitirme projem.
 ## kullanılan teknolojiler:
 
   flutter_bloc: 
+
+  
   dio: 
+
+  
   kartal: ^3.5.0
   lottie: ^2.7.0
   sqflite:
